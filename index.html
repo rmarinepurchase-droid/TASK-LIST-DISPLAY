@@ -3,45 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
 <title>TASK LIST - TV DISPLAY</title>
 <style>
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: #000;
-}
-iframe {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-  background: #000;
-}
+html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#000}
+iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:#000}
 </style>
 </head>
 <body>
-<iframe
-  id="reportFrame"
-  title="TASK LIST - DISPLAY"
-  src="https://app.powerbi.com/reportEmbed?reportId=8a5d1580-c4ba-492f-876a-444fffcd9d2a&autoAuth=true&ctid=470708c8-600a-4ac3-9134-4e3ba10db227&filterPaneEnabled=false&navContentPaneEnabled=false&toolbarEnabled=false"
-  allowfullscreen>
-</iframe>
-
+<div id="reportContainer"></div>
 <script>
-  // Reload the entire page every 2 minutes.
-  // A timestamp prevents the browser from serving a cached copy.
-  setTimeout(function () {
-    const url = new URL(window.location.href);
-    url.searchParams.set("tvrefresh", Date.now());
-    window.location.replace(url.toString());
-  }, 2 * 60 * 1000);
+const baseUrl="https://app.powerbi.com/reportEmbed?reportId=8a5d1580-c4ba-492f-876a-444fffcd9d2a&autoAuth=true&ctid=470708c8-600a-4ac3-9134-4e3ba10db227&filterPaneEnabled=false&navContentPaneEnabled=false&toolbarEnabled=false";
+function loadReport(){
+  const c=document.getElementById("reportContainer");
+  c.innerHTML="";
+  const frame=document.createElement("iframe");
+  frame.title="TASK LIST - DISPLAY";
+  frame.allowFullscreen=true;
+  frame.src=baseUrl+"&refresh="+Date.now();
+  c.appendChild(frame);
+}
+loadReport();
+setInterval(loadReport,120000);
 </script>
 </body>
 </html>
