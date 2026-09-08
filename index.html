@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>TASK LIST - TV DISPLAY</title>
 <style>
 html, body {
@@ -32,21 +35,13 @@ iframe {
 </iframe>
 
 <script>
-const baseUrl =
-  "https://app.powerbi.com/reportEmbed?reportId=8a5d1580-c4ba-492f-876a-444fffcd9d2a&autoAuth=true&ctid=470708c8-600a-4ac3-9134-4e3ba10db227&filterPaneEnabled=false&navContentPaneEnabled=false&toolbarEnabled=false";
-
-function refreshReport() {
-  const frame = document.getElementById("reportFrame");
-  frame.src = baseUrl + "&refresh=" + Date.now();
-}
-
-// Refresh every 10 minutes.
-setInterval(refreshReport, 10 * 60 * 1000);
-
-// Reload the page periodically as a recovery mechanism.
-setInterval(() => {
-  window.location.reload();
-}, 60 * 60 * 1000);
+  // Reload the entire page every 2 minutes.
+  // A timestamp prevents the browser from serving a cached copy.
+  setTimeout(function () {
+    const url = new URL(window.location.href);
+    url.searchParams.set("tvrefresh", Date.now());
+    window.location.replace(url.toString());
+  }, 2 * 60 * 1000);
 </script>
 </body>
 </html>
